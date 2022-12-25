@@ -1,16 +1,28 @@
-import { NavLink, useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
+import PropTypes, { arrayOf } from 'prop-types';
+import { MoviesList, Movie, StyledLink } from './TrendingMovies.styled';
 
 export const TrendingMovies = ({ movies }) => {
   const location = useLocation();
   return (
-    <ul>
+    <MoviesList>
       {movies.map(({ id, name, title }) => {
         return (
-          <li key={id}>
-            <NavLink to={`/movies/${id}`} state={{from: location}}>{title ? title : name}</NavLink>
-          </li>
+          <Movie key={id}>
+            <StyledLink to={`/movies/${id}`} state={{from: location}}>{title ? title : name}</StyledLink>
+          </Movie>
         );
       })}
-    </ul>
+    </MoviesList>
   );
+};
+
+TrendingMovies.propTypes = {
+  movies: arrayOf(
+    PropTypes.shape({
+      id: PropTypes.number.isRequired,
+      name: PropTypes.string,
+      title: PropTypes.string,
+    })
+  ),
 };

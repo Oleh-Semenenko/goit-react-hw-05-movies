@@ -1,14 +1,16 @@
 import { Route, Routes } from 'react-router-dom';
+import { lazy } from 'react';
 
-import { Home } from 'pages/Home/Home';
-import { Movies } from 'pages/Movies/Movies';
-import { MovieDetails } from 'pages/MovieDetails/MovieDetails';
-import { NotFound } from 'pages/NotFound/NotFound';
-import { Cast } from 'components/Cast/Cast';
-import { Reviews } from 'components/Reviews/Reviews';
-import { SharedLayout } from 'components/SharedLayout/SharedLayout';
+import Cast from './Cast/Cast';
+import Reviews from './Reviews/Reviews';
+import SharedLayout from './SharedLayout/SharedLayout';
 
-export const App = () => {
+const Home = lazy(() => import('../pages/Home/Home'));
+const Movies = lazy(() => import('../pages/Movies/Movies'));
+const MovieDetails = lazy(() => import('../pages/MovieDetails/MovieDetails'));
+const NotFound = lazy(() => import('../pages/NotFound/NotFound'));
+
+const App = () => {
   return (
       <Routes>
         <Route path="/" element={<SharedLayout />}>
@@ -23,3 +25,5 @@ export const App = () => {
       </Routes>
   );
 };
+
+export default App;

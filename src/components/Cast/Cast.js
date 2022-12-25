@@ -2,17 +2,19 @@ import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
 import { getMovieCast } from 'services/fetch';
+import { List, ActorCard, Photo, Content } from './Cast.styled';
+import photo from 'images/placeholder.png'
 
-export const Cast = () => {
+const Cast = () => {
   const [cast, setCast] = useState();
   const { movieId } = useParams();
+
 
   useEffect(() => {
     async function getCast() {
       try {
         const cast = await getMovieCast(movieId);
         setCast(cast);
-        console.log(cast);
       } catch (error) {
         console.log(error.message);
       }
@@ -21,23 +23,25 @@ export const Cast = () => {
   }, [movieId]);
 
   return (
-    <ul>
+    <List>
       {cast &&
         cast.map(({ profile_path, name, character, id }) => {
           return (
-            <li key={id}>
-              {profile_path && (
-                <img
-                  src={`https://image.tmdb.org/t/p/w500/${profile_path}`}
+            <ActorCard key={id}>
+                <Photo
+                  src={profile_path ? `https://image.tmdb.org/t/p/w500/${profile_path}` : photo}
                   alt={name}
                   width="100"
                 />
-              )}
-              <p>{name}</p>
-              <p>{character}</p>
-            </li>
+              <Content>
+                <span>{name}</span>
+                <span>{character}</span>
+              </Content>
+            </ActorCard>
           );
         })}
-    </ul>
+    </List>
   );
 };
+
+export default Cast;
