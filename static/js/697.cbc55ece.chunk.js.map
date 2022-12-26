@@ -1,0 +1,1 @@
+{"version":3,"file":"static/js/697.cbc55ece.chunk.js","mappings":"0JAIA,UAJiB,WACb,OAAO,iFACV,C","sources":["pages/NotFound/NotFound.js"],"sourcesContent":["const NotFound = () => {\n    return <div>Sorry, something goes wrong...The movie is not found</div>\n}\n\nexport default NotFound;"],"names":[],"sourceRoot":""}
