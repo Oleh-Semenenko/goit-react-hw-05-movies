@@ -2,9 +2,11 @@ import styled from '@emotion/styled';
 
 export const List = styled.ul`
   display: flex;
+  justify-content: space-between;
   gap: 30px;
   flex-wrap: wrap;
   margin-top: 16px;
+  width: 100%;
 `;
 
 export const ActorCard = styled.li`
