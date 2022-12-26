@@ -23,15 +23,22 @@ const MovieDetails = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
+    const controller = new AbortController();
     async function getMovie() {
       try {
-        const searchMovie = await getMovieById(movieId);
+        const searchMovie = await getMovieById(movieId, {
+          signal: controller.signal,
+        });
         setMovie(searchMovie);
       } catch {
         navigate('*', { replace: true });
       }
     }
     getMovie();
+
+    return () => {
+      controller.abort();
+    }
   }, [movieId, navigate]);
 
   return (

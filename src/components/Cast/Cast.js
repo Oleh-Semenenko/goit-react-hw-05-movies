@@ -3,19 +3,19 @@ import { useParams } from 'react-router-dom';
 
 import { getMovieCast } from 'services/fetch';
 import { List, ActorCard, Photo, Content } from './Cast.styled';
-import photo from 'images/placeholder.png'
+import photo from 'images/placeholder.png';
 
 const Cast = () => {
   const [cast, setCast] = useState();
   const [isLoading, setIsLoading] = useState(false);
   const { movieId } = useParams();
 
-
   useEffect(() => {
+    const controller = new AbortController();
     async function getCast() {
       setIsLoading(true);
       try {
-        const cast = await getMovieCast(movieId);
+        const cast = await getMovieCast(movieId, { signal: controller.signal });
         setCast(cast);
       } catch (error) {
         console.log(error.message);
@@ -24,6 +24,10 @@ const Cast = () => {
       }
     }
     getCast();
+
+    return () => {
+      controller.abort();
+    }
   }, [movieId]);
 
   return (

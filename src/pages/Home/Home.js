@@ -4,13 +4,18 @@ import { useState, useEffect } from 'react';
 
 const Home = () => {
   const [movies, setMovies] = useState([]);
-    const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
+    const controller = new AbortController();
     async function getMovies() {
       setIsLoading(true);
       try {
-        setMovies(await getTrendingFilms());
+        setMovies(
+          await getTrendingFilms({
+            signal: controller.signal,
+          })
+        );
       } catch (error) {
         console.log(error.message);
       } finally {
@@ -18,6 +23,9 @@ const Home = () => {
       }
     }
     getMovies();
+    return () => {
+      controller.abort();
+    };
   }, []);
 
   return (
